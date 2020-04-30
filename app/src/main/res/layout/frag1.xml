@@ -21,7 +21,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_toolbar"
-        app:layout_constraintBottom_toTopOf="@id/bottom"/>
+        app:layout_constraintBottom_toTopOf="@id/bottom"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <TextView
         android:id="@+id/bottom"

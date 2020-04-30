@@ -7,12 +7,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import android.Manifest;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GroupActivity extends AppCompatActivity {
@@ -20,6 +34,8 @@ public class GroupActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    List<Contact> contactList;
+    ContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,43 +49,59 @@ public class GroupActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);*/
-
-        rvSetting();
-        rvDataSetting();
-
-    }
-
-    private void rvSetting(){
-        recyclerView = findViewById(R.id.rv1);
+        recyclerView = findViewById(R.id.rv2);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-    }
+        //layoutManager = new LinearLayoutManager(getActivity());
+        //recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    private void rvDataSetting(){
-        GroupPersonAdapter adapter = new GroupPersonAdapter();
+        contactList = new ArrayList<>();
 
-        adapter.addItem(new Person(R.drawable.icon_user, "김가나", "01011113333"));
-        adapter.addItem(new Person(R.drawable.icon_user, "이나다", "01022224444"));
-        adapter.addItem(new Person(R.drawable.icon_user, "박다라", "01033335555"));
-        adapter.addItem(new Person(R.drawable.icon_user, "최라마", "01044446666"));
-        adapter.addItem(new Person(R.drawable.icon_user, "김마바", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "이바사", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "박사아", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "최아자", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "김자차", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "이차카", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "박카타", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "최타파", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "김파하", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "이하가", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "박가나", "01022228888"));
-        adapter.addItem(new Person(R.drawable.icon_user, "최나다", "01022228888"));
-
-
-
+        adapter = new ContactAdapter(this, contactList);
         recyclerView.setAdapter(adapter);
+
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.READ_CONTACTS)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        if(response.getPermissionName().equals(Manifest.permission.READ_CONTACTS)){
+                            getContacts();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                        Toast.makeText(GroupActivity.this, "Permission should be granted!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+
+
     }
+
+    private void getContacts() {
+
+        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null, null, null, null);
+        while (phones.moveToNext()){
+            String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String phoneUri = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
+
+            Contact contact = new Contact(name, phoneNumber, phoneUri);
+            contactList.add(contact);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

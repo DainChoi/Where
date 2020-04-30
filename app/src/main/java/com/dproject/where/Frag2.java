@@ -57,4 +57,6 @@ public class Frag2 extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
