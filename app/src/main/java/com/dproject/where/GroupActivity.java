@@ -28,6 +28,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,27 +101,34 @@ public class GroupActivity extends AppCompatActivity {
                     if (singleContact.isSelected() == true) {
 
                         data = data + "\n" + singleContact.getName().toString();
-                        /*
-                         * Toast.makeText( CardViewActivity.this, " " +
-                         * singleStudent.getName() + " " +
-                         * singleStudent.getEmailId() + " " +
-                         * singleStudent.isSelected(),
-                         * Toast.LENGTH_SHORT).show();
-                         */
+
+                         // Toast.makeText( CardViewActivity.this, " " +
+                         // singleStudent.getName() + " " +
+                         // singleStudent.getEmailId() + " " +
+                         // singleStudent.isSelected(),
+                         // Toast.LENGTH_SHORT).show();
 
                     }
 
                 }
 
-                Toast.makeText(GroupActivity.this,
-                        "Selected Friends: \n" + data, Toast.LENGTH_LONG)
-                        .show();
+
+                String message = data;
+                //String message = singleContact.getName().toString();
+                Intent intent = new Intent();
+                intent.putExtra("MESSAGE",message);
+                setResult(2,intent);
+                finish();//finishing activity
+
 
             }
         });
 
 
     }
+
+
+
 
     private void getContacts() {
 
