@@ -1,6 +1,7 @@
 package com.dproject.where;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,7 @@ public class GroupActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     List<Contact> contactList;
-    ContactAdapter adapter;
+    GroupContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,7 @@ public class GroupActivity extends AppCompatActivity {
 
         contactList = new ArrayList<>();
 
-        adapter = new ContactAdapter(this, contactList);
+        adapter = new GroupContactAdapter(this, contactList);
         recyclerView.setAdapter(adapter);
 
         Dexter.withActivity(this)

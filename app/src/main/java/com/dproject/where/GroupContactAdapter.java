@@ -34,7 +34,6 @@ public class GroupContactAdapter extends RecyclerView.Adapter<GroupContactAdapte
         return holder;
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
 
