@@ -5,6 +5,7 @@ public class Contact {
     private String name;
     private String phone;
     private String photo;
+    private boolean isSelected;
 
     public Contact(String name, String phone, String photo) {
         this.name = name;
@@ -34,5 +35,13 @@ public class Contact {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean isSelected) {
+        this.isSelected = isSelected;
     }
 }

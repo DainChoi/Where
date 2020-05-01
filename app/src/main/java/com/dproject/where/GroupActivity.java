@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +39,17 @@ public class GroupActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     List<Contact> contactList;
     GroupContactAdapter adapter;
+    private Button btnSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
+        btnSelect = (Button) findViewById(R.id.btnselect);
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
+
 
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -83,6 +88,36 @@ public class GroupActivity extends AppCompatActivity {
                         token.continuePermissionRequest();
                     }
                 }).check();
+
+        btnSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String data = "";
+
+                for (int i = 0; i < contactList.size(); i++) {
+                    Contact singleContact = contactList.get(i);
+                    if (singleContact.isSelected() == true) {
+
+                        data = data + "\n" + singleContact.getName().toString();
+                        /*
+                         * Toast.makeText( CardViewActivity.this, " " +
+                         * singleStudent.getName() + " " +
+                         * singleStudent.getEmailId() + " " +
+                         * singleStudent.isSelected(),
+                         * Toast.LENGTH_SHORT).show();
+                         */
+
+                    }
+
+                }
+
+                Toast.makeText(GroupActivity.this,
+                        "Selected Friends: \n" + data, Toast.LENGTH_LONG)
+                        .show();
+
+            }
+        });
 
 
     }

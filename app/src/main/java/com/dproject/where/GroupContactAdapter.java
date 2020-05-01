@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,23 +37,39 @@ public class GroupContactAdapter extends RecyclerView.Adapter<GroupContactAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ContactViewHolder holder, final int position) {
 
         Contact contact = contactList.get(position);
         holder.name_contact.setText(contact.getName());
         holder.phone_contact.setText(contact.getPhone());
-        /*
-        Contact contact = contactList.get(position);
-        holder.name_contact.setText(String.valueOf(contact.getName()));
-        holder.phone_contact.setText(String.valueOf(contact.getPhone()));
-        */
 
-        if(contact.getPhoto() != null){
+        holder.chkSelected.setChecked(contactList.get(position).isSelected());
+
+        holder.chkSelected.setTag(contactList.get(position));
+
+        holder.chkSelected.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                Contact contact = (Contact) cb.getTag();
+
+                contact.setSelected(cb.isChecked());
+                contactList.get(position).setSelected(cb.isChecked());
+
+                /*Toast.makeText(
+                        v.getContext(),
+                        "Clicked on Checkbox: " + cb.getText() + " is "
+                                + cb.isChecked(), Toast.LENGTH_LONG).show();*/
+            }
+        });
+
+
+        if (contact.getPhoto() != null) {
             Picasso.get().load(contact.getPhoto()).into(holder.img_contact);
-        }else {
+        } else {
             holder.img_contact.setImageResource(R.mipmap.ic_launcher_round);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -62,12 +80,15 @@ public class GroupContactAdapter extends RecyclerView.Adapter<GroupContactAdapte
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView name_contact, phone_contact;
         CircleImageView img_contact;
+        public CheckBox chkSelected;
+
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             name_contact = itemView.findViewById(R.id.name_contact);
             phone_contact = itemView.findViewById(R.id.phone_contact);
             img_contact = itemView.findViewById(R.id.img_contact);
+            chkSelected = (CheckBox) itemView.findViewById(R.id.chkSelected);
         }
     }
 
