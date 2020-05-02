@@ -76,7 +76,6 @@ public class Frag2 extends Fragment {
             String message = data.getStringExtra("MESSAGE");
             tv.setText(message);
 
-
         }
     }
 
