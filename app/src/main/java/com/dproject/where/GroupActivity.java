@@ -100,7 +100,7 @@ public class GroupActivity extends AppCompatActivity {
                     Contact singleContact = contactList.get(i);
                     if (singleContact.isSelected() == true) {
 
-                        data = data + "\n" + singleContact.getName().toString();
+                        data = data + ", " + singleContact.getName().toString();
 
                          // Toast.makeText( CardViewActivity.this, " " +
                          // singleStudent.getName() + " " +
