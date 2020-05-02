@@ -25,8 +25,6 @@ public class Frag2 extends Fragment {
     private View view;
     private TextView tv;
     private RecyclerView recyclerView;
-    List<GroupMember> memberList;
-    GroupMemberAdapter adapter;
 
     @Nullable
     @Override
@@ -34,19 +32,7 @@ public class Frag2 extends Fragment {
        view = inflater.inflate(R.layout.frag2, container, false);
 
         tv = (TextView) view.findViewById(R.id.tv);
-/*
-        recyclerView = view.findViewById(R.id.rv1);
-        recyclerView.setHasFixedSize(true);
-        //layoutManager = new LinearLayoutManager(getActivity());
-        //recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        memberList = new ArrayList<>();
-
-        adapter = new GroupMemberAdapter(getActivity(), memberList);
-        recyclerView.setAdapter(adapter);
-
- */
 
 
 
@@ -88,11 +74,8 @@ public class Frag2 extends Fragment {
         if(requestCode==2)
         {
             String message = data.getStringExtra("MESSAGE");
-           // GroupMember groupMember = new GroupMember(message);
             tv.setText(message);
-            //GroupMember memberList = new GroupMember(message);
-           // memberList.add(groupMember);
-           // adapter.notifyDataSetChanged();
+
 
         }
     }
