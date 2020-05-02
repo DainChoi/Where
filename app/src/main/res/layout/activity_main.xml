@@ -42,7 +42,9 @@
         app:itemTextColor="#B5267B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:theme="@style/NavigationViewStyle"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"
+        app:labelVisibilityMode="selected"
+        app:itemHorizontalTranslationEnabled="false"/>
 
     <FrameLayout
         android:id="@+id/main_frame"

@@ -34,7 +34,7 @@ public class Frag2 extends Fragment {
        view = inflater.inflate(R.layout.frag2, container, false);
 
         tv = (TextView) view.findViewById(R.id.tv);
-       /*
+/*
         recyclerView = view.findViewById(R.id.rv1);
         recyclerView.setHasFixedSize(true);
         //layoutManager = new LinearLayoutManager(getActivity());
@@ -46,7 +46,7 @@ public class Frag2 extends Fragment {
         adapter = new GroupMemberAdapter(getActivity(), memberList);
         recyclerView.setAdapter(adapter);
 
-        */
+ */
 
 
 
@@ -71,7 +71,7 @@ public class Frag2 extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if(item.getItemId() == R.id.add){
-           Toast.makeText(getActivity(), "Add btn is Clicked", Toast.LENGTH_SHORT).show();
+           //Toast.makeText(getActivity(), "Add btn is Clicked", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(getActivity(), GroupActivity.class);
             //startActivityForResult(i,1);
             startActivityForResult(i, 2);
@@ -80,7 +80,7 @@ public class Frag2 extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+       @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -88,9 +88,10 @@ public class Frag2 extends Fragment {
         if(requestCode==2)
         {
             String message = data.getStringExtra("MESSAGE");
+           // GroupMember groupMember = new GroupMember(message);
             tv.setText(message);
             //GroupMember memberList = new GroupMember(message);
-           // memberList.add(message);
+           // memberList.add(groupMember);
            // adapter.notifyDataSetChanged();
 
         }
