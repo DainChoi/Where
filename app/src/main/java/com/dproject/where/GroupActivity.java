@@ -96,7 +96,7 @@ public class GroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String data = "나 ";
+                String data = "";
 
                 for (int i = 0; i < contactList.size(); i++) {
                     Contact singleContact = contactList.get(i);
