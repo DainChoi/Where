@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,14 +49,14 @@ public class GroupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group);
 
         btnSelect = (Button) findViewById(R.id.btnselect);
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
 
 
         // Remove default title text
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         // Get access to the custom title view
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);*/
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         recyclerView = findViewById(R.id.rv2);
         recyclerView.setHasFixedSize(true);
         //layoutManager = new LinearLayoutManager(getActivity());
@@ -66,6 +67,7 @@ public class GroupActivity extends AppCompatActivity {
 
         adapter = new GroupContactAdapter(this, contactList);
         recyclerView.setAdapter(adapter);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.READ_CONTACTS)
@@ -98,6 +100,7 @@ public class GroupActivity extends AppCompatActivity {
 
                 for (int i = 0; i < contactList.size(); i++) {
                     Contact singleContact = contactList.get(i);
+
                     if (singleContact.isSelected() == true) {
 
                         data =  data + " " + singleContact.getName().toString();
@@ -115,10 +118,12 @@ public class GroupActivity extends AppCompatActivity {
 
                 String message = data;
                 //String message = singleContact.getName().toString();
-                Intent intent = new Intent();
-                intent.putExtra("MESSAGE",message);
-                setResult(2,intent);
-                finish();//finishing activity
+                if(message != null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("MESSAGE", message);
+                    setResult(2, intent);
+                    finish();//finishing activity
+                }
 
 
             }
@@ -126,6 +131,20 @@ public class GroupActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp()
+    {
+        finish();
+        return true;
+    }
+
+    @Override
+        public void onBackPressed(){
+            super.onBackPressed();
+    }
+
+
 
 
 

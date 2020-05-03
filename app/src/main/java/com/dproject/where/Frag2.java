@@ -66,20 +66,31 @@ public class Frag2 extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-       @Override
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
-        if(requestCode==2)
+        if(requestCode==2 && data != null)
         {
-            String message = data.getStringExtra("MESSAGE");
-            tv.setText(message);
+                String message = data.getStringExtra("MESSAGE");
+                tv.setText(message);
 
         }
+
     }
 
 
 
 
+
+
 }
+
+
+
+
+
+
+
+
